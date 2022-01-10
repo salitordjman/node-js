@@ -1,0 +1,14 @@
+{
+  "name": "1_3-import.export",
+  "version": "1.0.0",
+  "main": "1_3-import.export.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "yargs": "^12.0.2"
+  }
+}
