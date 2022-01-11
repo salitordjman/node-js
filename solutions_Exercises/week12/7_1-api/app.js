@@ -1,3 +1,4 @@
+const https = require("https");
 const requestApi = require("./requestApi.js");
 const axios = require("axios");
 const fetch = require("node-fetch");
@@ -42,3 +43,22 @@ axios
     console.log("Error type " + e.type);
   }
 })();
+
+const request = https.request(url, (response) => {
+  let data = "";
+
+  response.on("data", (chunk) => {
+    data = data + chunk.toString();
+  });
+
+  response.on("end", () => {
+    const body = JSON.parse(data);
+    console.log("joke 5: " + body.joke);
+  });
+});
+
+request.on("error", (error) => {
+  console.log("An error", error);
+});
+
+request.end();
