@@ -17,7 +17,7 @@ requestApi(url, (data) => {
 const search = async () => {
   try {
     const { data } = await axios.get(url);
-    console.log("Joke: " + data.joke);
+    console.log("Joke 2: " + data.joke);
   } catch (e) {
     console.log("Error number: " + e.errno);
   }
@@ -27,19 +27,18 @@ search();
 axios
   .get(url)
   .then(({ data }) => {
-    console.log("Joke: " + data.joke);
+    console.log("Joke 3: " + data.joke);
   })
   .catch(function (error) {
     console.log("hostname: " + error.hostname);
   });
-const search1 = async () => {
+(async () => {
   try {
     const res = await fetch(url);
     const data = await res.json();
 
-    console.log("Joke: " + data.joke);
+    console.log("Joke 4: " + data.joke);
   } catch (e) {
     console.log("Error type " + e.type);
   }
-};
-search1();
+})();
