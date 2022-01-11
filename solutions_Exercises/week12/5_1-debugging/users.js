@@ -3,6 +3,7 @@ const fs = require("fs");
 const addUser = (name, email, id) => {
   const users = loadUsers();
   const duplicateUser = users.find((user) => user.id === id);
+
   if (!duplicateUser) {
     users.push({
       id: id,

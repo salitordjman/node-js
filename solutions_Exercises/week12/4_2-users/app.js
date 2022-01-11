@@ -2,6 +2,9 @@ const yargs = require("yargs");
 const users = require("./users.js");
 const { v4: uuidv4 } = require("uuid");
 
+// Customize yargs version
+yargs.version("1.1.0");
+
 yargs.command({
   command: "add",
   describe: "Add a new user",
