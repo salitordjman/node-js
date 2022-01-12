@@ -20,25 +20,34 @@ app.post("/numbers", (req, res) => {
     res.send(`success using post ${arr}`);
   }
 });
-app.delete("/numbers", (req, res) => {
-  if (!arr.includes(req.body.new)) {
-    // if (!arr.find((el) => el === req.body.new)) {
-    res.status(400).send(`The number ${req.body.new} doesn't exists`);
+app.delete("/numbers/:number", (req, res) => {
+  const num = Number(req.params.number);
+  console.log(arr);
+  if (!arr.includes(num)) {
+    // if (!arr.find((el) => el === num)) {
+    res.status(400).send(`The number ${num} doesn't exists`);
   } else {
-    console.log(req.body.new);
-    arr = arr.filter((el) => el !== req.body.new);
+    console.log(num);
+    const index = arr.indexOf(num);
+    arr.splice(index, 1);
+    // arr = arr.filter((el) => el !== num);
 
     res.status(206).send(`success using delete ${arr}`);
   }
 });
-app.put("/numbers", (req, res) => {
-  if (!arr.includes(req.body.new)) {
+app.put("/numbers/:number", (req, res) => {
+  const num = Number(req.params.number);
+  if (!arr.includes(num)) {
     // if (!arr.find((el) => el === req.body.new)) {
-    res.status(401).send(`The number ${req.body.new} doesn't exists`);
+    res.status(401).send(`The number ${num} doesn't exists`);
   } else {
     console.log(req.body.new);
-    console.log(req.body.to);
-    arr.find((el, i) => el === req.body.new && (arr[i] = req.body.to));
+    console.log(num);
+    // arr.find(
+    //   (el, i) => el ===num  && (arr[i] = req.body.new)
+    // );
+    const index = arr.indexOf(num);
+    arr.splice(index, 1, req.body.new);
     res.status(210).send(`success using put ${arr}`);
   }
 });
