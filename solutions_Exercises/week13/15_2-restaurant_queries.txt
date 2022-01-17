@@ -1,0 +1,44 @@
+show dbs
+use 15_2-restaurant_queries
+db.restaurants.insertMany([{},{},.....])
+
+1.Crud
+
+1.1-db.restaurants.find().pretty()
+1.2-db.restaurants.find({cuisine:"asian"}).pretty()
+1.3-db.restaurants.find({kosher:true}).pretty()
+1.4-db.restaurants.find({"address.city":"Tel Aviv"}).pretty()
+1.5-db.restaurants.find({"address.city":"Tel Aviv","address.street":"Stam Adress 15"}).pretty()
+1.6-db.restaurants.find({"address.coordinates":[20.46574,-40.6774]}).pretty()
+1.7-db.restaurants.find().sort({name: 1}).pretty()
+1.8-db.restaurants.find().sort({"address.city": 1}).pretty()
+1.9-db.restaurants.updateOne({_id: ObjectId("61e55d6dd584dd9cfc3c7e82")},{$set:{name:"cocoNat"}})
+1.10-db.restaurants.updateOne({_id: ObjectId("61e55d6dd584dd9cfc3c7e82")},{$push:{reviews:{ date: new Date(),score: 9}}})
+1.11-db.restaurants.updateMany({},{$set:{kosher:true}})
+1.12-db.restaurants.deleteOne({_id: ObjectId("61e55d6dd584dd9cfc3c7e82")})
+1.13-db.restaurants.deleteMany({})
+
+
+2.forEach Queries
+
+2.1.A-db.restaurants.find().forEach((restaurant)=>print("Restaurant name: " + restaurant.name))
+2.1.B-db.restaurants.find().forEach((restaurant)=>print(`Restaurant Name: ${restaurant.name}`))
+2.2-db.restaurants.find().forEach((restaurant)=>print(`Restaurant City: ${restaurant.address.city}`))
+2.3-db.restaurants.find().forEach((restaurant)=>print(`Restaurant Coordinates: ${restaurant.address.coordinates}`))
+
+
+3.Advanced Queries
+/^c/-מתחיל באות זו
+/c/-אות זו נמצאת במילה
+
+3.1-db.restaurants.find({name: /^c/}).pretty()
+3.2-db.restaurants.find().count()
+3.3.A-db.restaurants.find({"reviews.date": {$gte: new Date("2019-01-01"), $lte: new Date("2020-01-01")}}).pretty()
+3.3.B-db.restaurants.find({"reviews.date": {$gte: new Date("2019-01-01")}}).pretty()
+3.3.C-db.restaurants.find({"reviews.date": ISODate("2020-01-01")}).pretty()
+3.3.D-db.restaurants.find({"reviews.date": ISODate("2020-01-01")}).count()
+
+4.Aggregation operations
+
+4.1-db.restaurants.aggregate({ $project: { reviewsAvg: { $avg: "$reviews.score"} } })
+4.2-db.restaurants.aggregate([{$match:{_id:ObjectId("61e56e018a95eb719b148e4a")}},{$unwind:"$reviews"},{ $group: {_id: "$name", reviewsAvg: { $avg: "$reviews.score"} } }])
