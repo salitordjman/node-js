@@ -25,6 +25,12 @@ const Product = mongoose.model("Product", {
       type: String,
       required: true,
       minLength: 10,
+      // minLength: [10, 'Must be at least 10 chars' ],
+      // validate(value) {
+      //   if (value.length < 10) {
+      //     throw new Error("must include at least 10 chars");
+      //   }
+      // },
     },
     price: {
       type: Number,
@@ -41,6 +47,8 @@ const Product = mongoose.model("Product", {
     },
     images: {
       type: Array,
+      // type: [string],
+      // minItems:2,
       required: true,
       validate(value) {
         if (value.length < 2) {
