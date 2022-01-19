@@ -21,6 +21,20 @@ router.get("/products", async (req, res) => {
   }
 });
 
+//!בגלל שזה לפני האי.די אז ניתן לרשום גם ככה
+// router.get("/products/active", async (req, res) => {
+router.get("/products/check/active", async (req, res) => {
+  try {
+    const prod = await Product.find({ isActive: true });
+    if (!prod) {
+      return res.status(404).send();
+    }
+    res.send(prod);
+  } catch (e) {
+    res.status(500).send();
+  }
+});
+
 router.get("/products/:id", async (req, res) => {
   const _id = req.params.id;
   try {
@@ -35,19 +49,6 @@ router.get("/products/:id", async (req, res) => {
     res.status(500).send();
   }
 });
-
-router.get("/products/check/active", async (req, res) => {
-  try {
-    const prod = await Product.find({ isActive: true });
-    if (!prod) {
-      return res.status(404).send();
-    }
-    res.send(prod);
-  } catch (e) {
-    res.status(500).send();
-  }
-});
-
 router.get("/products/check/:min/:max", async (req, res) => {
   const min = req.params.min;
   const max = req.params.max;
